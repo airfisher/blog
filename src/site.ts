@@ -1,6 +1,6 @@
 export const site = {
   name: 'Airfisher',
-  title: 'Airfisher 的个人博客',
+  title: 'Airfisher\'s Blog',
   description: '记录技术实践、问题与思考。',
 };
 export const formatDate = (date: Date) => new Intl.DateTimeFormat('zh-CN', {

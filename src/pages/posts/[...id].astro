@@ -10,13 +10,13 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 <Base title={post.data.title} description={post.data.description}>
-  <article class="reading">
-    <a class="back-link" href="/">← 所有文章</a>
-    <header class="article-header">
-      <div class="post-meta"><time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>{post.data.tags.map(tag => <span class="tag">{tag}</span>)}</div>
-      <h1>{post.data.title}</h1><p>{post.data.description}</p>
+  <article class="mx-auto mt-7 max-w-[700px] sm:mt-10">
+    <a class="mb-8 inline-block text-sm text-muted" href="/">← 所有文章</a>
+    <header class="mb-[30px] border-b border-line pb-[26px]">
+      <div class="flex flex-wrap items-center gap-4 font-mono text-[13px] leading-[1.8] text-muted"><time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>{post.data.tags.map(tag => <span class="text-xs leading-[1.7] text-muted before:mr-[3px] before:font-mono before:text-accent before:content-['#']">{tag}</span>)}</div>
+      <h1 class="mt-4 mb-3 text-[28px] leading-normal font-semibold tracking-[-.8px] wrap-anywhere sm:text-[34px]">{post.data.title}</h1><p class="text-base leading-[1.9] text-muted">{post.data.description}</p>
     </header>
     <div class="prose"><Content /></div>
-    <div class="article-end"><span>— 完 —</span><a href="/">返回文章列表 ↗</a></div>
+    <div class="mt-12 flex justify-between gap-5 border-t border-line pt-6 text-sm text-muted"><span>— 完 —</span><a href="/">返回文章列表 ↗</a></div>
   </article>
 </Base>

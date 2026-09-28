@@ -3,7 +3,7 @@ title: '你好，世界'
 description: '一篇示例文章，也是这个博客的起点。'
 date: 2026-09-28
 tags: ['随记']
-draft: false
+draft: true
 ---
 这是博客的第一篇示例文章。你可以直接修改这份 Markdown 文件，写下自己的开场白。
 

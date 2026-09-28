@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
 import { site } from '../site';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import ThemeScript from '../components/ThemeScript.astro';
 interface Props { title?: string; description?: string; }
 const { title, description = site.description } = Astro.props;
 const pageTitle = title ? `${title} · ${site.name}` : site.title;
@@ -20,17 +22,18 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:type" content="website" />
-    <meta name="theme-color" content="#111315" />
+    <meta name="theme-color" content="#fafafa" />
+    <ThemeScript />
   </head>
   <body>
-    <a class="skip-link" href="#main">跳转到正文</a>
-    <div class="shell">
-      <header class="site-header">
-        <a class="brand" href="/" aria-label="Airfisher 首页"><span class="brand-mark" aria-hidden="true">[a]</span><span>airfisher</span></a>
-        <nav aria-label="主导航"><a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>文章</a><a href="https://github.com/airfisher">GitHub <span aria-hidden="true">↗</span></a><a href="/rss.xml">RSS</a></nav>
+    <a class="absolute -top-24 left-5 z-10 bg-surface p-3 focus:top-2.5" href="#main">跳转到正文</a>
+    <div class="mx-auto flex min-h-svh max-w-[880px] flex-col px-[22px] sm:px-10">
+      <header class="flex flex-wrap items-center justify-between gap-3.5 border-b border-line py-4 font-mono sm:gap-6 sm:py-[25px]">
+        <a class="flex items-center gap-2 text-[15px] font-semibold sm:gap-3 sm:text-base" href="/" aria-label="Airfisher 首页"><span class="font-normal text-accent" aria-hidden="true">[a]</span><span>airfisher</span></a>
+        <nav class="flex flex-wrap items-center gap-4 text-sm text-muted sm:gap-6 [&>a]:py-2 [&>a[aria-current=page]]:text-ink [&>a[aria-current=page]]:underline [&>a[aria-current=page]]:decoration-accent [&>a[aria-current=page]]:underline-offset-8" aria-label="主导航"><a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>文章</a><a href="https://github.com/airfisher">GitHub <span aria-hidden="true">↗</span></a><a href="/rss.xml">RSS</a><ThemeToggle /></nav>
       </header>
-      <main id="main"><slot /></main>
-      <footer><span>© {new Date().getFullYear()} {site.name}</span><a href="https://github.com/airfisher/blog">source ↗</a></footer>
+      <main id="main" class="flex-1"><slot /></main>
+      <footer class="mt-16 flex flex-wrap justify-between gap-5 border-t border-line pt-[22px] pb-7 font-mono text-xs leading-[1.8] text-muted sm:mt-24"><span>© {new Date().getFullYear()} {site.name}</span></footer>
     </div>
   </body>
 </html>

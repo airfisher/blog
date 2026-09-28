@@ -37,7 +37,9 @@ draft: false
 
 `draft: true` 的文章不会出现在站点、RSS 或站点地图中。日期用于排序，不用于定时发布。`hello-world.md` 是可删除或替换的示例文章。
 
-修改 `src/site.ts` 可更新博客名称和简介；样式位于 `src/styles/global.css`。
+修改 `src/site.ts` 可更新博客名称和简介；页面布局使用 Tailwind CSS 工具类；浅色／深色配色和 Markdown 排版位于 `src/styles/global.css`。
+
+导航栏的太阳／月亮按钮用于切换主题。首次访问跟随系统设置，手动选择会保存在浏览器中，刷新和跳转页面后继续生效。主题在页面绘制前应用，代码高亮也随主题切换。
 
 ## GitHub
 
