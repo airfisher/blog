@@ -1,25 +1,30 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import { formatDate } from '../site';
-const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
-<Base>
-  <section class="pt-[42px] pb-9 sm:pt-15 sm:pb-12">
-    <p class="mb-5 font-mono text-[13px] leading-[1.7] text-muted"><span class="text-accent" aria-hidden="true">~/</span> airfisher / notes</p>
-    <h1 class="text-[clamp(30px,4vw,38px)] leading-normal font-semibold tracking-[-.8px]">工程手记<span class="ml-[5px] font-mono text-accent" aria-hidden="true">.</span></h1>
-    <p class="mt-3 text-base leading-[1.9] text-muted">记录技术实践、问题与思考。</p>
+<Base profile description="十年 Web 开发，从 PHP 到跨端。探索人与 AI 共生时代，创造、生活与工作的新方式。">
+  <section class="pt-6 sm:pt-10" aria-labelledby="profile-heading">
+    <div class="mb-6 flex size-20 items-center justify-center rounded-full border border-line bg-surface font-mono text-[36px] tracking-[-3px] text-accent" aria-hidden="true">a.</div>
+    <h1 id="profile-heading" class="text-4xl leading-tight font-bold tracking-tight sm:text-[42px]">Airfisher</h1>
+    <p class="mt-2 text-sm text-muted">软件工程师 · 10 年 Web 开发</p>
+    <div class="mt-6 space-y-3 text-base leading-[1.9] text-ink">
+      <p>从 PHP 到跨端，关注视觉、交互与软件工程。</p>
+      <p>探索人与 AI 共生时代，创造、生活与工作的新方式。</p>
+    </div>
   </section>
-  <section aria-labelledby="posts-heading">
-    <div class="flex items-center justify-between gap-4 border-b border-line pb-[15px]"><h2 id="posts-heading" class="text-sm font-medium"><span class="mr-2 font-mono text-accent" aria-hidden="true">#</span> 文章索引</h2><span class="font-mono text-xs leading-[1.7] text-muted">{String(posts.length).padStart(2, '0')} entries</span></div>
-    {posts.map(post => <article class="grid grid-cols-1 gap-2 border-b border-line py-[22px] sm:grid-cols-[120px_minmax(0,1fr)] sm:gap-7 sm:py-[25px]">
-      <time class="pt-[3px] font-mono text-xs leading-[1.8] text-muted sm:text-[13px]" datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
-      <div class="min-w-0">
-        <h3 class="mb-[7px] text-[19px] leading-relaxed font-semibold"><a class="group flex items-baseline justify-between gap-5 wrap-anywhere" href={`/posts/${post.id}/`}>{post.data.title}<span class="font-mono text-lg text-muted group-hover:text-accent" aria-hidden="true">↗</span></a></h3>
-        <p class="text-[15px] leading-[1.85] wrap-anywhere text-muted">{post.data.description}</p>
-        {post.data.tags.length > 0 && <div class="mt-3 flex flex-wrap gap-3">{post.data.tags.map(tag => <span class="text-xs leading-[1.7] text-muted before:mr-[3px] before:font-mono before:text-accent before:content-['#']">{tag}</span>)}</div>}
-      </div>
-    </article>)}
-    {posts.length === 0 && <p class="py-6 text-muted">暂无文章。</p>}
-  </section>
+
+  <nav class="mt-9 space-y-3" aria-label="了解更多">
+    <a href="/posts/" class="group flex items-center gap-4 rounded-xl border border-line bg-surface/40 p-5 hover:border-accent/50 hover:bg-surface focus-visible:outline-offset-4">
+      <span class="flex size-11 shrink-0 items-center justify-center rounded-lg border border-line bg-page text-accent" aria-hidden="true">
+        <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6zM15 3v5h4M9 12h7M9 16h5"/></svg>
+      </span>
+      <span class="min-w-0 flex-1"><span class="block text-base font-semibold text-ink">文章</span><span class="mt-1 block text-sm text-muted">技术实践与日常思考</span></span>
+      <span class="text-muted group-hover:text-accent" aria-hidden="true">↗</span>
+    </a>
+    <a href="https://github.com/airfisher" class="group flex items-center gap-4 rounded-xl border border-line bg-surface/40 p-5 hover:border-accent/50 hover:bg-surface focus-visible:outline-offset-4">
+      <span class="flex size-11 shrink-0 items-center justify-center rounded-lg border border-line bg-page font-mono text-lg text-accent" aria-hidden="true">&lt;/&gt;</span>
+      <span class="min-w-0 flex-1"><span class="block text-base font-semibold text-ink">GitHub</span><span class="mt-1 block text-sm text-muted">代码与项目</span></span>
+      <span class="text-muted group-hover:text-accent" aria-hidden="true">↗</span>
+    </a>
+  </nav>
+  <p class="mt-6 text-center text-sm text-muted"><a href="/rss.xml" class="underline decoration-line underline-offset-4 hover:decoration-accent">通过 RSS 订阅文章</a></p>
 </Base>
