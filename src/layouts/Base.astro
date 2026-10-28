@@ -3,10 +3,13 @@ import '../styles/global.css';
 import { site } from '../site';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import ThemeScript from '../components/ThemeScript.astro';
-interface Props { title?: string; description?: string; profile?: boolean; }
-const { title, description = site.description, profile = false } = Astro.props;
+interface Props { title?: string; description?: string; }
+const { title, description = site.description } = Astro.props;
 const pageTitle = title ? `${title} · ${site.name}` : site.title;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const isCurrent = (prefix: string) => Astro.url.pathname.startsWith(prefix) ? 'page' as const : undefined;
+const navLink = 'py-2 text-muted transition-colors hover:text-accent [&[aria-current=page]]:text-ink [&[aria-current=page]]:underline [&[aria-current=page]]:decoration-accent [&[aria-current=page]]:underline-offset-8';
+const navSlash = 'mx-2 select-none text-line/80 sm:mx-2.5';
 ---
 <!doctype html>
 <html lang="zh-CN">
@@ -22,18 +25,42 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:type" content="website" />
-    <meta name="theme-color" content="#fafafa" />
+    <meta name="theme-color" content="#f6f5ef" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+SC:wght@400;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet" />
     <ThemeScript />
   </head>
   <body>
-    <a class="absolute -top-24 left-5 z-10 bg-surface p-3 focus:top-2.5" href="#main">跳转到正文</a>
-    <div class:list={["mx-auto flex min-h-svh flex-col px-6 sm:px-10", profile ? "max-w-[640px]" : "max-w-[880px]"]}>
-      {profile ? <header class="flex justify-end pt-6 sm:pt-8"><ThemeToggle /></header> : <header class="flex flex-wrap items-center justify-between gap-3.5 border-b border-line py-4 font-mono sm:gap-6 sm:py-[25px]">
-        <a class="flex items-center gap-2 text-[15px] font-semibold sm:gap-3 sm:text-base" href="/" aria-label="Airfisher 首页"><span class="font-normal text-accent" aria-hidden="true">[a]</span><span>airfisher</span></a>
-        <nav class="flex flex-wrap items-center gap-4 text-sm text-muted sm:gap-6 [&>a]:py-2 [&>a[aria-current=page]]:text-ink [&>a[aria-current=page]]:underline [&>a[aria-current=page]]:decoration-accent [&>a[aria-current=page]]:underline-offset-8" aria-label="主导航"><a href="/posts/" aria-current={Astro.url.pathname.startsWith('/posts') ? 'page' : undefined}>文章</a><a href="https://github.com/airfisher">GitHub <span aria-hidden="true">↗</span></a><a href="https://x.com/Airfisher4">X <span aria-hidden="true">↗</span></a><a href="/rss.xml">RSS</a><ThemeToggle /></nav>
-      </header>}
+    <a class="absolute -top-24 left-5 z-10 bg-page p-3 focus:top-2.5" href="#main">跳转到正文</a>
+    <div class="mx-auto flex min-h-svh w-full max-w-[1040px] flex-col px-6 sm:px-10">
+      <header class="flex items-center justify-between gap-4 border-b border-line py-5">
+        <a class="py-1 font-serif text-[18px] font-semibold tracking-[0.28em] text-ink uppercase sm:text-[20px]" href="/" aria-label="AIRFISHER 首页">AIRFISHER</a>
+        <nav class="flex items-center gap-4 text-sm sm:gap-5" aria-label="主导航">
+          <a class={navLink} href="/posts/" aria-current={isCurrent('/posts')}>Posts</a>
+          <span class={navSlash} aria-hidden="true">/</span>
+          <a class={navLink} href="/about/" aria-current={isCurrent('/about')}>About</a>
+          <span class={navSlash} aria-hidden="true">/</span>
+          <a class={navLink} href="/posts/">Notes</a>
+          <span class="mx-1 hidden h-4 w-px bg-line sm:block" aria-hidden="true"></span>
+          <ThemeToggle />
+        </nav>
+      </header>
       <main id="main" class="flex-1"><slot /></main>
-      <footer class:list={["mt-16 flex gap-5 pb-7 font-mono text-xs leading-[1.8] text-muted", profile ? "justify-center pt-6" : "flex-wrap justify-between border-t border-line pt-[22px] sm:mt-24"]}><span>© {new Date().getFullYear()} {site.name}</span></footer>
+      <footer class="mt-20 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-line pt-6 pb-8 sm:mt-24">
+        <div class="text-sm text-ink">
+          <p>© {new Date().getFullYear()} {site.name}</p>
+          <p class="mt-1 text-[13px] text-muted">Built with care for reading, systems, and quiet interfaces.</p>
+        </div>
+        <nav class="flex items-center text-[13px]" aria-label="页脚导航">
+          <a class="text-muted transition-colors hover:text-accent" href="/posts/">Posts</a>
+          <span class={navSlash} aria-hidden="true">/</span>
+          <a class="text-muted transition-colors hover:text-accent" href="/about/">About</a>
+          <span class={navSlash} aria-hidden="true">/</span>
+          <a class="text-muted transition-colors hover:text-accent" href="/posts/">Notes</a>
+          <svg class="ml-2 size-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2 19 6.5-11L13 15l2.5-4L22 19"/></svg>
+        </nav>
+      </footer>
     </div>
   </body>
 </html>

@@ -1,7 +1,7 @@
 ---
 title: '你好，世界'
 description: '一篇示例文章，也是这个博客的起点。'
-date: 2026-09-28
+date: 2026-08-15
 tags: ['随记']
 draft: false
 ---

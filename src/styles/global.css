@@ -9,31 +9,45 @@
   --color-muted: var(--muted);
   --color-line: var(--line);
   --color-accent: var(--accent);
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-serif: "Source Serif 4", "Noto Serif SC", "Songti SC", "SimSun", serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
 
 @layer base {
   :root {
     color-scheme: light;
-    --background: #fafafa;
-    --surface: #f0f2ef;
-    --text: #202522;
-    --muted: #626a64;
-    --line: #d9ded9;
-    --accent: #426922;
+    --background: #f6f5ef;
+    --surface: #ebefe1;
+    --text: #2c332c;
+    --muted: #67716a;
+    --line: #d8dcd0;
+    --accent: #5f7355;
     font-synthesis: none;
     @apply bg-page font-sans text-ink;
   }
   :root.dark {
     color-scheme: dark;
-    --background: #111315;
-    --surface: #191c1f;
-    --text: #e5e7e9;
-    --muted: #9ca3aa;
-    --line: #30353a;
-    --accent: #b5dd85;
+    --background: #131612;
+    --surface: #1c211b;
+    --text: #e3e6df;
+    --muted: #99a294;
+    --line: #2f362c;
+    --accent: #b3cd92;
   }
+  /* Paper grain: near-white noise tile multiplied over the page color. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: url("/images/paper-noise.png");
+    background-size: 160px 160px;
+    mix-blend-mode: multiply;
+    opacity: 0.55;
+  }
+  .dark body::before { opacity: 0.3; }
   a:hover { @apply text-accent; }
   :where(a, button):focus-visible { @apply outline-2 outline-offset-4 outline-accent; }
   ::selection { @apply bg-accent text-page; }
@@ -43,10 +57,10 @@
 @layer components {
   .prose { @apply text-base leading-[1.95] wrap-anywhere sm:text-[17px]; }
   .prose p { @apply my-4; }
-  .prose h1 { @apply mt-10 mb-5 text-3xl leading-normal font-semibold; }
-  .prose h2 { @apply mt-9 mb-4 text-[23px] leading-relaxed font-semibold; }
-  .prose h3 { @apply mt-7 mb-3 text-xl font-semibold; }
-  .prose :where(h4, h5, h6) { @apply mt-6 mb-3 font-semibold; }
+  .prose h1 { @apply mt-10 mb-5 font-serif text-3xl leading-normal font-semibold; }
+  .prose h2 { @apply mt-9 mb-4 font-serif text-[23px] leading-relaxed font-semibold; }
+  .prose h3 { @apply mt-7 mb-3 font-serif text-xl font-semibold; }
+  .prose :where(h4, h5, h6) { @apply mt-6 mb-3 font-serif font-semibold; }
   .prose a { @apply text-accent underline underline-offset-4; }
   .prose blockquote { @apply my-[26px] border-l-2 border-accent bg-surface px-5 py-px text-muted; }
   .prose pre { @apply overflow-x-auto rounded border border-line p-3.5 font-mono text-sm leading-[1.8] sm:p-5; }
