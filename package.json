@@ -6,14 +6,17 @@
     "dev": "astro dev",
     "check": "astro check",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "preflight": "node scripts/preflight-visual.mjs",
+    "ship:check": "npm run build && npm run preflight"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.5",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "sharp": "^0.34.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
